@@ -1,0 +1,98 @@
+Ubuntu 16.04
+
+Microphone fix:
+/etc/modprobe.d/alsa.conf
+options snd_hda_intel index=1 model=,alc283-dac-wcaps
+
+
+keyboard shortcuts
+install xbindkeys, xvkbd, xbacklight, xev, xmodmap
+------------------------------------------------------------
+file .xbindkeysrc :
+
+"xbacklight -dec 10"
+    m:0x0 + c:72
+    F6
+"xbacklight -inc 10"
+    m:0x0 + c:73
+    F7
+"amixer -D pulse set Master toggle"
+    m:0x0 + c:74
+    F8
+"amixer set Master 10- unmute"
+    m:0x0 + c:75
+    F9
+"amixer set Master 10+ unmute"
+    m:0x0 + c:76
+    F10
+"xvkbd -xsendevent -text '\[Delete]'"
+Alt + BackSpace
+"xvkbd -xsendevent -text '\[End]'"
+Alt + Right
+"xvkbd -xsendevent -text '\[Home]'"
+Alt + Left
+"xvkbd -xsendevent -text '\[Page_Down]'"
+Alt + Down
+"xvkbd -xsendevent -text '\[Page_Up]'"
+Alt + Up
+
+------------------------------------------------------------
+Wifi /etc/modprobe.d/ath9k.conf
+options ath9k bt_ant_diversity=1 ps_enable=0
+
+------------------------------------------------------------
+to fix no backlight property problem
+
+/etc/X11/xorg.conf
+
+Section "Device"
+    Identifier  "Card0"
+    Driver      "intel"
+    Option      "Backlight"  "intel_backlight"
+EndSection
+------------------------------------------------------------
+
+caps lock:
+xmodmap -e "keycode 133 = Caps_Lock"
+xmodmap -pke >~/.Xmodmap
+vi .xinitrc : xmodmap .Xmodmap
+
+xdotool key Caps_Lock
+
+--------------------------------------------------------------
+"xbacklight -dec 10"
+    m:0x0 + c:72
+    F6
+"xbacklight -inc 10"
+    m:0x0 + c:73
+    F7
+"amixer -D pulse set Master toggle"
+    m:0x0 + c:74
+    F8
+"amixer set Master 10- unmute"
+    m:0x0 + c:75
+    F9
+"amixer set Master 10+ unmute"
+    m:0x0 + c:76
+    F10
+
+"xdotool keyup alt+Up Arrow; xdotool key Page_Up"
+alt+Up Arrow
+
+"xdotool keyup alt+Down Arrow; xdotool key Page_Down"
+alt+Down Arrow
+
+"xdotool keyup alt+Left Arrow; xdotool key Home"
+alt+Left Arrow
+
+"xdotool keyup alt+Right Arrow; xdotool key End"
+alt+Right Arrow
+
+"xdotool keyup alt+BackSpace; xdotool key Delete"
+Alt + BackSpace
+-------------------------------------------------------------------
+.xinitrc
+xmodmap .Xmodmap
+
+setEnv.sh
+xbindkeys
